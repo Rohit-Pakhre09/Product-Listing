@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-gray-200 py-10 mt-10">
@@ -16,24 +18,16 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <a href="/" className="hover:text-blue-400">
-                Home
-              </a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="/about" className="hover:text-blue-400">
-                About
-              </a>
+              <Link to="/about">About</Link>
             </li>
             <li>
-              <a href="/service" className="hover:text-blue-400">
-                Services
-              </a>
+              <Link to="/products">Products</Link>
             </li>
             <li>
-              <a href="/login" className="hover:text-blue-400">
-                Login
-              </a>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         </div>
@@ -71,15 +65,17 @@ const Footer = () => {
           <p className="text-sm mb-3">
             Join our newsletter to get exclusive deals and updates.
           </p>
-          <form className="flex">
+          <form className="flex flex-col lg:flex-row gap-5 lg:gap-0">
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full p-2 rounded-l border border-gray-600 focus:outline-none"
+              className="w-full p-2 border border-gray-600 focus:outline-none 
+               rounded-md lg:rounded-l lg:rounded-r-none"
             />
             <button
               type="submit"
-              className="px-4 bg-blue-500 rounded-r hover:bg-blue-600 transition cursor-pointer"
+              className="p-3 bg-blue-500 text-white cursor-pointer transition hover:bg-blue-600 
+               text-sm rounded-md lg:rounded-r lg:rounded-l-none"
             >
               Subscribe
             </button>

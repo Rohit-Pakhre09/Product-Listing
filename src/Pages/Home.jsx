@@ -27,7 +27,7 @@ const Home = () => {
             <img
               src="/src/assets/shopping-1.avif"
               alt="Urban Cart Shopping"
-              className="rounded-xl shadow-lg max-w-full h-auto object-cover md:max-w-md"
+              className="rounded-xl shadow-lg max-w-full h-auto object-cover md:max-w-sm"
             />
           </div>
         </section>
