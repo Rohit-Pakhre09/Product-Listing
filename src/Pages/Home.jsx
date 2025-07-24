@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <main>
       <section className="container mx-auto py-15">
-        <section className="flex flex-col gap-10 md:flex-row md:gap-5 items-center py-20 px-5">
+        <section className="flex flex-col gap-10 md:flex-row md:gap-5 items-center py-20 px-5 lg:px-0">
           <div className="flex-1 space-y-6">
             <h1 className="text-4xl md:text-4xl font-bold text-gray-800">
               Welcome to <span className="text-blue-500">Urban Cart.</span>
