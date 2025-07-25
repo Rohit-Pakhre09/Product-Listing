@@ -4,6 +4,7 @@ import About from "../Pages/About";
 import Login from "../Pages/Login";
 import NoPage from "../Pages/NoPage";
 import Products from "../Pages/Products";
+import Description from "../Pages/Description";
 
 const allRoutes = [
   {
@@ -21,6 +22,10 @@ const allRoutes = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/description/:id/:title",
+    element: <Description />,
   },
   {
     path: "*",

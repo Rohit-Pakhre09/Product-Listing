@@ -1,30 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ data }) => {
-  const { id, title, price, description, image } = data;
+  const { id, title, price, category, description, image } = data;
   const [like, isLike] = useState(false);
+
   return (
     // Main Section
     <main>
-      <section className="h-130 w-85 rounded-xl shadow-md p-5 bg-white mt-10 hover:shadow-blue-400 hover:-translate-y-2 transition-all duration-200 ease-in cursor-pointer relative">
-        {/* Img */}
-        <div className="mx-auto">
-          <img src={image} className="h-[200px] mx-auto pt-3" alt={title} />
-        </div>
-        <hr className="mt-5 opacity-7" />
-        {/* Title */}
-        <p className="font-bold pt-2 h-17 text-lg text-cyan-700 line-clamp-2">
-          {title}
-        </p>
-        {/* Price */}
-        <p className="font-bold text-3xl pt-2 text-gray-700">${price}</p>
-        {/* Description */}
-        <p className="text-sm text-gray-500 mt-2 capitalize line-clamp-3">
-          {description}
-        </p>
+      <section className="h-135 w-85 rounded-xl shadow-md p-5 bg-white mt-10 hover:shadow-blue-400 hover:-translate-y-2 transition-all duration-200 ease-in cursor-pointer relative">
+        <Link
+          to={`/description/${id}/${title}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {/* Img */}
+          <div className="mx-auto">
+            <img src={image} className="h-[200px] mx-auto pt-3" alt={title} />
+          </div>
+          <hr className="mt-5 opacity-7" />
+          {/* Title */}
+          <p className="font-bold pt-2 h-17 text-lg text-cyan-700 line-clamp-2">
+            {title}
+          </p>
+          {/* Price */}
+          <p className="font-bold text-3xl pt-2 text-gray-700">${price}</p>
+          {/* Category */}
+          <div
+            className="border border-gray-600 w-25 font-medium overflow-hidden text-center text-sm text-ellipsis text-nowrap px-2 mt-2 mb-1 rounded text-gray-600 capitalize"
+            title={category}
+          >
+            {category}
+          </div>
+          {/* Description */}
+          <p className="text-sm text-gray-500 mt-2 capitalize line-clamp-3">
+            {description}
+          </p>
+        </Link>
         {/* Buttons [Add to Cart, Edit, Delete] */}
         <div className="absolute z-30 bottom-8 flex items-center justify-between gap-10 w-75">
-          <button className="px-4 py-2 border text-sm rounded-md border-blue-500 cursor-pointer hover:bg-blue-900 hover:text-white transition-all duration-300 ease-in-out">
+          <button className="px-4 py-2 border text-sm rounded-md border-blue-500 cursor-pointer hover:bg-blue-900 hover:border-blue-900 hover:text-white transition-all duration-300 ease-in-out">
             Add to Cart
           </button>
 

@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
+import { useEffect } from "react";
 const Home = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Urban Cart";
+  }, []);
   return (
     <main>
       <section className="container mx-auto py-5 md:py-15">

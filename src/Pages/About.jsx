@@ -1,5 +1,10 @@
+import { useEffect } from "react";
 import Footer from "../Components/Footer";
+
 const About = () => {
+  useEffect(() => {
+    document.title = "About Us - Urban Cart";
+  }, []);
   return (
     <main>
       <section className="container mx-auto pt-30 pb-10">
@@ -45,7 +50,7 @@ const About = () => {
           </p>
         </div>
       </section>
-     <Footer /> 
+      <Footer />
     </main>
   );
 };
