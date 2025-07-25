@@ -1,28 +1,29 @@
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
-
+import Footer from "../Components/Footer";
 const Home = () => {
   const navigate = useNavigate();
   return (
     <main>
       <section className="container mx-auto py-5 md:py-15">
         <section className="flex flex-col gap-10 md:flex-row md:gap-5 items-center py-20 px-5 lg:px-0">
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 space-y-6 gap-10">
             <h1 className="text-4xl md:text-4xl font-bold text-gray-800">
               Welcome to <span className="text-blue-500">Urban Cart.</span>
             </h1>
-            <p className="text-lg md:text-sm lg:text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg md:text-sm lg:text-xl text-gray-600 leading-relaxed text-justify">
               Urban Cart is your ultimate one-stop online destination for
               everything you need to elevate your lifestyle — from trendy
               fashion and stylish accessories to home essentials and everyday
               products. We curate the latest collections from top brands and
               trusted suppliers, ensuring that every item meets our standards of
-              quality, style, and value. <br /><br /> Whether you’re searching for chic
-              outfits to update your wardrobe, functional lifestyle essentials
-              for your home, or everyday must-haves that make life easier, we’ve
-              got it all in one convenient place.
+              quality, style, and value. <br />
+              <br /> Whether you’re searching for chic outfits to update your
+              wardrobe, functional lifestyle essentials for your home, or
+              everyday must-haves that make life easier, we’ve got it all in one
+              convenient place.
             </p>
-            <button onClick={() => navigate("/products")}
+            <button
+              onClick={() => navigate("/products")}
               className="px-6 py-3 bg-blue-500 text-white font-medium cursor-pointer rounded-lg 
          hover:bg-blue-600 transition-all duration-300 ease-in-out"
             >

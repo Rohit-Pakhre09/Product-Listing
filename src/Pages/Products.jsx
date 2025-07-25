@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import axios from "axios";
-import Footer from "../components/Footer";
+import Footer from "../Components/Footer";
 
 const url = "http://localhost:3000/products";
 const Products = () => {
@@ -27,7 +27,7 @@ const Products = () => {
   return (
     <main className="pt-30">
       <section className="container mx-auto px-4 lg:px-0">
-        <section className="flex items-center justify-between">
+        <section className="flex items-center justify-between px-4">
           <p className="font-bold text-5xl text-blue-700">Collections</p>
         </section>
         <hr className="mt-5 opacity-8" />
@@ -44,7 +44,7 @@ const Products = () => {
           </div>
         ) : (
           <div className="flex justify-center gap-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-15">
+            <div className="grid grid-cols-1 sm:grid-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-15">
               {data.map((el) => (
                 <ProductCard key={el.id} data={el} />
               ))}

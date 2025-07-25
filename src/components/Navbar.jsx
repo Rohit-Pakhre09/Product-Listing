@@ -84,7 +84,7 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Nav Link */}
-        <section className="block visible md:hidden md:invisivle">
+        <section className="block visible md:hidden md:invisivle cursor-pointer">
           {open ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -128,7 +128,7 @@ const Navbar = () => {
             <hr className="mt-5" />
 
             {/* Main Content */}
-            <div className="flex flex-col justify-between h-145 p-5">
+            <div className="flex flex-col justify-between h-[85vh] p-5 relative">
               {/* Navigation */}
               <nav>
                 <ul className="space-y-4 text-lg">
@@ -151,7 +151,7 @@ const Navbar = () => {
               </nav>
 
               {/* Footer / Copyright */}
-              <div className="text-sm text-gray-400 text-center">
+              <div className="text-sm text-gray-400 text-center absolute bottom-1 ">
                 © {new Date().getFullYear()} Urban Cart. All rights reserved.
               </div>
             </div>

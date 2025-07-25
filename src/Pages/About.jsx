@@ -1,13 +1,12 @@
-import Footer from "../components/Footer";
-
+import Footer from "../Components/Footer";
 const About = () => {
   return (
-    <main className="">
+    <main>
       <section className="container mx-auto pt-30 pb-10">
-        <p className="font-bold text-center text-2xl sm:text-2xl md:text-4xl lg:text-5xl text-gray-700 uppercase">
+        <p className="font-bold text-center text-3xl sm:text-2xl md:text-4xl lg:text-5xl text-gray-700 uppercase">
           About Us
         </p>
-        <hr className="mt-5" />
+        <hr className="mt-5 opacity-8" />
 
         <div className="mt-10 space-y-6 text-gray-600 text-base sm:text-lg leading-relaxed max-w-4xl mx-auto px-4 lg:px-0">
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-blue-800">

@@ -5,17 +5,36 @@ import Login from "../Pages/Login";
 import NoPage from "../Pages/NoPage";
 import Products from "../Pages/Products";
 
+const allRoutes = [
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/products",
+    element: <Products />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "*",
+    element: <NoPage />,
+  },
+];
+
 const AllRoutes = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NoPage />} />
-      </Routes>
-    </>
+    <Routes>
+      {allRoutes.map((r, i) => (
+        <Route key={i} path={r.path} element={r.element} />
+      ))}
+    </Routes>
   );
 };
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const NoPage = () => {
   const Navigate = useNavigate();
   return (
-    <section className="min-h-[80vh] bg-gray-100 flex flex-col items-center justify-center gap-20">
+    <section className="min-h-[95vh] bg-gray-100 flex flex-col items-center justify-center gap-20">
       <section>
         <img src="/src/assets/404.png" alt="404 Error" />
         <p className="text-center text-red-500 uppercase font-black text-4xl pointer-events-none select-none">
