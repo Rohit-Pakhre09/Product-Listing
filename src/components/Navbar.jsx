@@ -30,7 +30,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `font-medium px-4 py-2 rounded-lg md:text-md lg:text-md transition-all duration-300 ease-in-out ${
                     isActive
-                      ? "bg-blue-700 text-white"
+                      ? "bg-blue-600 text-white shadow-sm shadow-white"
                       : "bg-transparent text-white hover:bg-blue-400"
                   }`
                 }
@@ -43,7 +43,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `font-medium px-4 py-2 rounded-lg md:text-md lg:text-md transition-all duration-300 ease-in-out ${
                     isActive
-                      ? "bg-blue-700 text-white"
+                      ? "bg-blue-600 text-white shadow-sm shadow-white"
                       : "bg-transparent text-white hover:bg-blue-400"
                   }`
                 }
@@ -57,7 +57,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `font-medium px-4 py-2 rounded-lg md:text-md lg:text-md transition-all duration-300 ease-in-out ${
                     isActive
-                      ? "bg-blue-700 text-white"
+                      ? "bg-blue-600 text-white shadow-sm shadow-white"
                       : "bg-transparent text-white hover:bg-blue-400"
                   }`
                 }
@@ -71,7 +71,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `font-medium px-4 py-2 rounded-lg md:text-md lg:text-md transition-all duration-300 ease-in-out ${
                     isActive
-                      ? "bg-blue-700 text-white"
+                      ? "bg-blue-600 text-white shadow-sm shadow-white"
                       : "bg-transparent text-white hover:bg-blue-400"
                   }`
                 }

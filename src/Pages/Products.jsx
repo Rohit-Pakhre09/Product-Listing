@@ -34,7 +34,7 @@ const Products = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedInput(input);
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(timer);
   }, [input]);
