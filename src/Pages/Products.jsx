@@ -4,7 +4,7 @@ import axios from "axios";
 import Footer from "../Components/Footer";
 import { MdClear } from "react-icons/md";
 
-const url = "http://localhost:3000/products";
+const url = "https://urban-cart-server.onrender.com/products";
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -100,7 +100,7 @@ const Products = () => {
             </div>
 
             {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-15 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
               {filteredData.length > 0 ? (
                 filteredData.map((el) => <ProductCard key={el.id} data={el} />)
               ) : (

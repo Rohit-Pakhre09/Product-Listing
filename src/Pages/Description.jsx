@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import axios from "axios";
 
-const url = "http://localhost:3000/products";
+const url = "https://urban-cart-server.onrender.com/products";
 
 const Description = () => {
   const { id, title } = useParams();
@@ -44,11 +44,11 @@ const Description = () => {
 
   if (error || !data) {
     return (
-      <main className="flex flex-col justify-center items-center min-h-[80vh] text-gray-600">
+      <main className="flex flex-col justify-center items-center min-h-[90vh] text-gray-600">
         <img
           src="/src/assets/serverError.png"
           alt="Error"
-          className="w-[200px] mb-5"
+          className="w-[500px] mb-5"
         />
         <p className="text-xl">Failed to load product details.</p>
       </main>
