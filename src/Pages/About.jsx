@@ -5,6 +5,7 @@ const About = () => {
   useEffect(() => {
     document.title = "About Us - Urban Cart";
   }, []);
+
   return (
     <main>
       <section className="container mx-auto pt-30 pb-10">
@@ -47,6 +48,18 @@ const About = () => {
             deals, and a growing community of happy shoppers, Urban Cart isn’t
             just a marketplace—it’s your reliable partner for all things
             shopping, designed to make your life easier and more connected.
+          </p>
+
+          <p className="text-justify text-sm italic text-gray-500">
+            ~ This website is a demonstration project and not an actual commercial
+            platform. It has been created by{" "}
+            <a href="https://www.linkedin.com/in/rohit-pakhre/">
+              <span className="font-semibold cursor-pointer hover:text-blue-500 transition-all duration-200 ease-in">
+                Rohit Pakhre
+              </span>
+            </a>{" "}
+            to simulate a real-world e-commerce experience for educational and
+            portfolio purposes.
           </p>
         </div>
       </section>

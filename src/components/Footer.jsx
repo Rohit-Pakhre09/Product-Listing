@@ -86,6 +86,12 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="mt-8 border-t border-gray-700 pt-10 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} Urban Cart. All rights reserved.
+        <p className="text-sm italic pt-3">
+          Created by: {" "}
+          <a href="https://github.com/Rohit-Pakhre09" rel="noopener noreferrer">
+            <span className="hover:text-blue-500 transition-all duration-200 ease-in">Rohit Pakhre</span>
+          </a>
+        </p>
       </div>
     </footer>
   );
