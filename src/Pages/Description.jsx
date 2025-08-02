@@ -69,22 +69,22 @@ const Description = () => {
           </div>
 
           {/* Right: Product Details */}
-          <div className="flex-1 flex flex-col justify-between">
+          <div className="flex-1 flex flex-col justify-around">
             <div>
               {/* Product Title */}
               <h1 className="text-3xl font-bold text-cyan-700 mb-3">
                 {productTitle || title}
               </h1>
-
+              {/* Price */}
+              <p className="text-4xl font-bold text-gray-800 mb-8">${price}</p>
               {/* Category */}
               <p className="text-gray-500 capitalize mb-2">
                 Category: <span className="font-medium">{category}</span>
               </p>
-
               {/* Rating Section */}
               <div className="flex items-center gap-3 mb-4">
                 {/* Stars (simple example using Unicode stars or SVGs) */}
-                <div className="flex text-yellow-400">
+                <div className="flex text-yellow-500">
                   {Array.from({ length: 5 }, (_, index) => (
                     <span key={index}>
                       {index < Math.round(data?.rating?.rate || 0) ? "★" : "☆"}
@@ -96,14 +96,10 @@ const Description = () => {
                   reviews)
                 </p>
               </div>
-
               {/* Description */}
-              <p className="text-gray-600 text-lg leading-relaxed mb-5 text-justify">
+              <p className="text-gray-600 text-lg leading-relaxed mb-5 text-justify capitalize">
                 {description}
               </p>
-
-              {/* Price */}
-              <p className="text-4xl font-bold text-gray-800 mb-8">${price}</p>
             </div>
 
             {/* Buttons */}

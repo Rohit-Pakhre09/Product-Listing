@@ -5,6 +5,7 @@ import Footer from "../Components/Footer";
 import { MdClear } from "react-icons/md";
 
 const url = "http://localhost:3000/products";
+
 const Products = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,20 +13,19 @@ const Products = () => {
   const [input, setInput] = useState("");
   const [debouncedInput, setDebouncedInput] = useState("");
 
-  // Fetch data from server
   const serverData = async () => {
     try {
       const res = await axios.get(url);
       setData(res.data);
-      setLoading(false);
+      setError(false); 
     } catch (error) {
       console.log(error);
       setError(true);
+    } finally {
       setLoading(false);
     }
   };
 
-  // Handle input change
   const handleChange = (e) => {
     setInput(e.target.value);
   };
@@ -35,11 +35,9 @@ const Products = () => {
     const timer = setTimeout(() => {
       setDebouncedInput(input);
     }, 200);
-
     return () => clearTimeout(timer);
   }, [input]);
 
-  // Filter data
   const filteredData = data.filter((product) => {
     const search = debouncedInput.toLowerCase();
     const priceString = product.price.toString();
@@ -83,17 +81,15 @@ const Products = () => {
 
         <hr className="mt-5 opacity-8" />
 
-        {/* Server error state */}
-        {error && !loading && (
-          <div className="flex justify-center items-center min-h-[60vh]">
-            <img src="/src/assets/serverError.png" alt="server error" />
-          </div>
-        )}
-
-        {/* Loading Spinner */}
+        {/* Show Loader */}
         {loading ? (
           <div className="flex justify-center items-center min-h-[80vh]">
             <div className="w-12 h-12 border-4 border-gray-300 border-t-cyan-600 rounded-full animate-spin"></div>
+          </div>
+        ) : error ? (
+          /* Show only Server Error (not "No Product Found") */
+          <div className="flex justify-center items-center min-h-[60vh]">
+            <img src="/src/assets/serverError.png" alt="Server Error" />
           </div>
         ) : (
           <section>
@@ -103,23 +99,20 @@ const Products = () => {
               </button>
             </div>
 
-            {/* <div className="flex justify-center gap-10"> */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-15 justify-items-center">
-                {filteredData.length > 0 ? (
-                  filteredData.map((el) => (
-                    <ProductCard key={el.id} data={el} />
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500 col-span-full text-lg h-100 flex items-center">
-                    <img
-                      src="/src/assets/noProductsFound.png"
-                      className="select-none pointer-events-none"
-                      alt="No Product Found."
-                    />
-                  </p>
-                )}
-              </div>
-            {/* </div> */}
+            {/* Product Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-15 justify-items-center">
+              {filteredData.length > 0 ? (
+                filteredData.map((el) => <ProductCard key={el.id} data={el} />)
+              ) : (
+                <p className="text-center text-gray-500 col-span-full text-lg h-100 flex items-center">
+                  <img
+                    src="/src/assets/noProductsFound.png"
+                    className="select-none pointer-events-none"
+                    alt="No Product Found."
+                  />
+                </p>
+              )}
+            </div>
           </section>
         )}
       </section>
