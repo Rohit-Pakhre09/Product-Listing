@@ -23,7 +23,7 @@ const Description = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => {  
     productObj();
   }, [id]);
 

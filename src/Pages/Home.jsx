@@ -1,20 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AppContext } from "../contexts/AppProvider";
+
 const Home = () => {
   const navigate = useNavigate();
   useEffect(() => {
     document.title = "Urban Cart";
   }, []);
+
+  // Context
+  const { light } = useContext(AppContext);
   return (
     <main>
       <section className="container mx-auto py-5 md:py-15">
         <section className="flex flex-col gap-10 md:flex-row md:gap-5 items-center py-20 px-5 lg:px-0">
           <div className="flex-1 space-y-6 gap-10">
-            <h1 className="text-4xl md:text-4xl font-bold text-gray-800">
+            <h1
+              className={`text-4xl md:text-4xl font-bold ${
+                light ? "text-neutral-200" : "text-gray-800"
+              } animation`}
+            >
               Welcome to <span className="text-blue-500">Urban Cart.</span>
             </h1>
-            <p className="text-lg md:text-sm lg:text-xl text-gray-600 leading-relaxed text-justify">
+            <p
+              className={`text-lg md:text-sm lg:text-lg ${
+                light ? "text-neutral-50" : "text-gray-600"
+              } leading-relaxed text-justify`}
+            >
               Urban Cart is your ultimate one-stop online destination for
               everything you need to elevate your lifestyle — from trendy
               fashion and stylish accessories to home essentials and everyday
@@ -28,8 +41,12 @@ const Home = () => {
             </p>
             <button
               onClick={() => navigate("/products")}
-              className="px-6 py-3 bg-blue-500 text-white font-medium cursor-pointer rounded-lg 
-         hover:bg-blue-600 transition-all duration-300 ease-in-out"
+              className={`px-6 py-3 ${
+                light
+                  ? "bg-sky-600 hover:bg-slate-700"
+                  : "bg-blue-500 hover:bg-blue-600"
+              } text-white font-medium cursor-pointer rounded-lg animation 
+         D`}
             >
               Shop Now
             </button>
@@ -46,27 +63,67 @@ const Home = () => {
 
         <section className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center select-none cursor-pointer mx-5 py-10">
           {/* Card 1 */}
-          <div className="p-20 md:p-5 lg:p-15 bg-white rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300">
-            <h3 className="text-2xl font-bold text-blue-500">Fast Delivery</h3>
-            <p className="text-gray-600 mt-4 text-base leading-relaxed">
+          <div
+            className={`p-20 md:p-5 lg:p-15 ${
+              light ? "bg-slate-800 shadow-md shadow-sky-500" : "bg-white"
+            } rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300`}
+          >
+            <h3
+              className={`text-2xl font-bold ${
+                light ? "text-neutral-100" : "text-blue-500"
+              }`}
+            >
+              Fast Delivery
+            </h3>
+            <p
+              className={`${
+                light ? "text-neutral-200" : "text-gray-600"
+              } mt-4 text-base leading-relaxed`}
+            >
               Get your favorite products delivered to your doorstep quickly and
               safely with our reliable delivery network.
             </p>
           </div>
           {/* Card 2 */}
-          <div className="p-20 md:p-5 lg:p-15 bg-white rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300">
-            <h3 className="text-2xl font-bold text-blue-500">Top Quality</h3>
-            <p className="text-gray-600 mt-4 text-base leading-relaxed">
+          <div
+            className={`p-20 md:p-5 lg:p-15 ${
+              light ? "bg-slate-800 shadow-md shadow-sky-500" : "bg-white"
+            } rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300`}
+          >
+            <h3
+              className={`text-2xl font-bold ${
+                light ? "text-neutral-100" : "text-blue-500"
+              }`}
+            >
+              Top Quality
+            </h3>
+            <p
+              className={`${
+                light ? "text-neutral-200" : "text-gray-600"
+              } mt-4 text-base leading-relaxed`}
+            >
               Only the best products, handpicked from trusted brands, so you
               always shop with confidence.
             </p>
           </div>
           {/* Card 3 */}
-          <div className="p-20 md:p-5 lg:p-15 bg-white rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300">
-            <h3 className="text-2xl font-bold text-blue-500">
+          <div
+            className={`p-20 md:p-5 lg:p-15 ${
+              light ? "bg-slate-800 shadow-md shadow-sky-500" : "bg-white"
+            } rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300`}
+          >
+            <h3
+              className={`text-2xl font-bold ${
+                light ? "text-neutral-100" : "text-blue-500"
+              }`}
+            >
               Exclusive Offers
             </h3>
-            <p className="text-gray-600 mt-4 text-base leading-relaxed">
+            <p
+              className={`${
+                light ? "text-neutral-200" : "text-gray-600"
+              } mt-4 text-base leading-relaxed`}
+            >
               Special discounts and deals curated just for you — shop smart and
               save more every day.
             </p>
@@ -74,10 +131,18 @@ const Home = () => {
         </section>
 
         <section className="mt-20 text-center px-5 max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-800">
+          <h2
+            className={`text-4xl font-bold ${
+              light ? "text-neutral-200" : "text-gray-800"
+            }`}
+          >
             Why Shop with Urban Cart?
           </h2>
-          <p className="mt-4 text-lg text-gray-600 leading-relaxed">
+          <p
+            className={`mt-4 text-lg text-gray-600 leading-relaxed ${
+              light ? "text-neutral-200" : "text-gray-800"
+            }`}
+          >
             At Urban Cart, we make shopping easy, affordable, and reliable. With
             a wide range of quality products, unbeatable prices, and fast
             delivery, your satisfaction is our priority.
