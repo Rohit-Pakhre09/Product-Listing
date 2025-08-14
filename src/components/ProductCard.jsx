@@ -1,51 +1,91 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../contexts/AppProvider";
 
 const ProductCard = ({ data }) => {
   const { id, title, price, category, description, image } = data;
   const [like, isLike] = useState(false);
 
+  // Context.
+  const { light } = useContext(AppContext);
+
   return (
     // Main Section
     <main>
-      <section className="h-135 w-80 rounded-xl shadow-md p-5 bg-white mt-10 hover:shadow-blue-400 hover:-translate-y-2 transition-all duration-200 ease-in cursor-pointer relative">
-        <Link
-          to={`/description/${id}/${title}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      <section
+        className={`h-135 w-80 rounded-xl shadow-md p-5 mt-10 ${
+          light
+            ? "bg-sky-900 text-neutral-400 hover:shadow-sky-400 hover:shadow-md"
+            : "bg-white hover:shadow-blue-400"
+        } hover:-translate-y-2 transition-all duration-200 ease-in cursor-pointer relative`}
+      >
+        <Link to={`/description/${id}/${title}`}>
           {/* Img */}
           <div className="mx-auto">
             <img src={image} className="h-[200px] mx-auto pt-3" alt={title} />
           </div>
-          <hr className="mt-5 opacity-7" />
+          <hr
+            className={`mt-5 ${
+              light ? "border border-neutral-100 opacity-30" : "opacity-7"
+            }`}
+          />
           {/* Title */}
-          <p className="font-bold pt-2 h-17 text-lg text-cyan-700 line-clamp-2">
+          <p
+            className={`font-bold pt-2 h-17 text-lg ${
+              light ? "text-neutral-200" : "text-cyan-700"
+            } line-clamp-2`}
+          >
             {title}
           </p>
           {/* Price */}
-          <p className="font-bold text-3xl pt-2 text-gray-700">${price}</p>
+          <p
+            className={`font-bold text-3xl pt-2 ${
+              light ? "text-neutral-50" : "text-gray-700"
+            } animation`}
+          >
+            ${price}
+          </p>
           {/* Category */}
           <div
-            className="border border-gray-600 w-25 font-medium overflow-hidden text-center text-sm text-ellipsis text-nowrap px-2 mt-2 mb-1 rounded text-gray-600 capitalize"
+            className={`border ${
+              light
+                ? "border-neutral-200 text-neutral-200"
+                : "border-gray-600 text-gray-600"
+            } w-25 font-medium overflow-hidden text-center text-sm text-ellipsis text-nowrap px-2 mt-2 mb-1 rounded capitalize animation`}
             title={category}
           >
             {category}
           </div>
           {/* Description */}
-          <p className="text-sm text-gray-500 mt-2 capitalize line-clamp-3">
+          <p
+            className={`text-sm ${
+              light ? "text-slate-300" : "text-gray-500"
+            } mt-2 capitalize line-clamp-3 animation`}
+          >
             {description}
           </p>
         </Link>
         {/* Buttons [Add to Cart, Edit, Delete] */}
-        <div className="absolute z-30 bottom-8 flex items-center justify-between gap-10 w-75 left-2">
-          <button className="px-3 py-2 border text-sm rounded-md border-blue-500 cursor-pointer hover:bg-blue-900 hover:border-blue-900 hover:text-white transition-all duration-300 ease-in-out">
+        <div className="absolute z-30 bottom-8 flex items-center justify-around gap-5 w-75 left-2">
+          <button
+            className={`px-3 py-2 border text-sm rounded-md cursor-pointer ${
+              light
+                ? "border-0 hover:bg-sky-700 hover:text-white text-neutral-200 bg-sky-500"
+                : "border-blue-500 hover:bg-blue-900 hover:border-blue-900 hover:text-white"
+            } animation`}
+          >
             Add to Cart
           </button>
 
-          <section className="flex justify-center items-center gap-5">
+          <section className="flex justify-center items-center gap-3">
             {/* Edit SVG */}
-            <div className="w-9 h-9 rounded-full p-2 flex justify-center items-center bg-gray-100 shadow-sm hover:shadow-emerald-500">
+            <div
+              className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
+                light
+                  ? "bg-gray-100 shadow-md hover:shadow-emerald-500"
+                  : "bg-gray-100 shadow-sm hover:shadow-emerald-500"
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -57,12 +97,18 @@ const ProductCard = ({ data }) => {
             </div>
 
             {/* Delete SVG */}
-            <div className="w-9 h-9 rounded-full p-2 flex justify-center items-center bg-gray-100 shadow-sm hover:shadow-red-500">
+            <div
+              className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
+                light
+                  ? "bg-gray-100 shadow-md hover:shadow-red-500"
+                  : "bg-gray-100 shadow-sm hover:shadow-red-500"
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="red"
-                class="size-6"
+                className="size-6"
               >
                 <path
                   fillRule="evenodd"
@@ -74,9 +120,11 @@ const ProductCard = ({ data }) => {
 
             {/* Like SVG */}
             <div
-              className={`w-9 h-9 rounded-full p-2 flex justify-center items-center bg-gray-100 shadow-sm hover:shadow-red-500 ${
-                like ? "shadow-red-500" : "shadow-none"
-              }`}
+              className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
+                light
+                  ? "bg-gray-100 shadow-lg hover:shadow-red-500"
+                  : "bg-gray-100 shadow-sm hover:shadow-red-500"
+              } ${like ? "shadow-red-500" : "shadow-none"}`}
               onClick={() => isLike(!like)}
             >
               <svg

@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import axios from "axios";
+import { AppContext } from "../contexts/AppProvider";
 
 const url = "https://urban-cart-server.onrender.com/products";
 
@@ -10,6 +11,7 @@ const Description = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { light } = useContext(AppContext);
 
   const productObj = async () => {
     try {
@@ -23,7 +25,7 @@ const Description = () => {
     }
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     productObj();
   }, [id]);
 
@@ -60,7 +62,13 @@ const Description = () => {
       <section className="container mx-auto px-5 md:px-10 lg:px-0">
         <div className="flex flex-col md:flex-row gap-15">
           {/* Left: Product Image */}
-          <div className="flex-1 flex items-center justify-center bg-white p-5 rounded-lg shadow-md hover:shadow-blue-300 transition-all duration-300 cursor-pointer">
+          <div
+            className={`flex-1 flex items-center justify-center  p-5 rounded-lg shadow-md ${
+              light
+                ? "bg-neutral-800 shadow-lg hover:shadow-sky-600"
+                : "bg-white hover:shadow-blue-300"
+            } transition-all duration-300 cursor-pointer`}
+          >
             <img
               src={image}
               alt={productTitle || title}
@@ -72,13 +80,27 @@ const Description = () => {
           <div className="flex-1 flex flex-col justify-around">
             <div>
               {/* Product Title */}
-              <h1 className="text-3xl font-bold text-cyan-700 mb-3">
+              <h1
+                className={`text-3xl font-bold ${
+                  light ? "text-neutral-50" : "text-cyan-700"
+                } animation mb-3`}
+              >
                 {productTitle || title}
               </h1>
               {/* Price */}
-              <p className="text-4xl font-bold text-gray-800 mb-8">${price}</p>
+              <p
+                className={`text-4xl font-bold ${
+                  light ? "text-neutral-300" : "text-gray-800"
+                } mb-8`}
+              >
+                ${price}
+              </p>
               {/* Category */}
-              <p className="text-gray-500 capitalize mb-2">
+              <p
+                className={`${
+                  light ? "text-neutral-400" : "text-gray-500"
+                } capitalize mb-2`}
+              >
                 Category: <span className="font-medium">{category}</span>
               </p>
               {/* Rating Section */}
@@ -91,23 +113,43 @@ const Description = () => {
                     </span>
                   ))}
                 </div>
-                <p className="text-gray-600 text-sm">
+                <p
+                  className={`${
+                    light ? "text-neutral-400" : "text-gray-600"
+                  } text-sm`}
+                >
                   {data?.rating?.rate || 0} / 5 ({data?.rating?.count || 0}{" "}
                   reviews)
                 </p>
               </div>
               {/* Description */}
-              <p className="text-gray-600 text-lg leading-relaxed mb-5 text-justify capitalize">
+              <p
+                className={`${
+                  light ? "text-neutral-300" : "text-gray-600"
+                } text-lg leading-relaxed mb-5 text-justify capitalize`}
+              >
                 {description}
               </p>
             </div>
 
             {/* Buttons */}
             <div className="flex flex-wrap gap-4">
-              <button className="px-6 py-3 border text-black border-blue-600 hover:text-white rounded-md hover:bg-blue-800 hover:border-blue-800 transition duration-300 cursor-pointer">
+              <button
+                className={`px-6 py-3 border ${
+                  light
+                    ? "text-white border-sky-600 bg-sky-500 hover:text-white rounded-md hover:bg-slate-600 hover:border-slate-600"
+                    : "text-black border-blue-600 hover:text-white rounded-md hover:bg-blue-800 hover:border-blue-800"
+                } transition duration-300 cursor-pointer`}
+              >
                 Add to Cart
               </button>
-              <button className="px-6 py-3 border text-black border-gray-400 rounded-md hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition duration-300 cursor-pointer">
+              <button
+                className={`px-6 py-3 border ${
+                  light
+                    ? "text-white border-emerald-400 bg-emerald-400 rounded-md hover:bg-emerald-800 hover:border-emerald-800 hover:text-white"
+                    : "text-black border-emerald-400 rounded-md hover:bg-emerald-500 hover:border-emerald-500 hover:text-white"
+                } transition duration-300 cursor-pointer`}
+              >
                 Buy Now
               </button>
             </div>
