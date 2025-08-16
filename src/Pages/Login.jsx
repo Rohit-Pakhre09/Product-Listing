@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../contexts/AppProvider";
 
 const formObj = {
   email: "",
@@ -9,6 +10,9 @@ const formObj = {
 
 const Login = () => {
   const [eye, setEye] = useState(false);
+
+  // Context
+  const { light } = useContext(AppContext);
 
   useEffect(() => {
     document.title = "Login - Urban Cart";
@@ -38,13 +42,23 @@ const Login = () => {
   });
 
   return (
-    <main className="pt-30 min-h-[70vh] flex items-center justify-center bg-gray-100">
+    <main
+      className={`pt-30 min-h-[100vh] flex items-center justify-center ${
+        light ? "bg-neutral-900" : "bg-gray-100"
+      } animation`}
+    >
       <section className="container mx-auto px-5 lg:px-0 max-w-md">
         <form
           onSubmit={formikForm.handleSubmit}
-          className="bg-white p-6 rounded-xl shadow-lg"
+          className={`${
+            light ? "bg-slate-700" : "bg-white"
+          } p-6 rounded-xl shadow-lg animation`}
         >
-          <p className="font-bold text-blue-500 text-2xl text-center pb-5">
+          <p
+            className={`font-bold ${
+              light ? "text-neutral-200" : "text-blue-500"
+            } text-2xl text-center pb-5 animation`}
+          >
             Login Form
           </p>
 
@@ -53,7 +67,11 @@ const Login = () => {
             <div>
               <input
                 type="email"
-                className="w-full border border-gray-400 rounded p-2 outline-0"
+                className={`w-full border ${
+                  light
+                    ? "border-neutral-200 placeholder:text-neutral-200 text-neutral-200"
+                    : "border-gray-400"
+                } rounded p-2 outline-0 animation`}
                 name="email"
                 value={formikForm.values.email}
                 onChange={formikForm.handleChange}
@@ -69,7 +87,13 @@ const Login = () => {
 
             {/* Password Field with Eye Toggle */}
             <div>
-              <div className="flex items-center border border-gray-400 rounded">
+              <div
+                className={`flex items-center border ${
+                  light
+                    ? "border-neutral-200 placeholder:text-neutral-200 text-neutral-200"
+                    : "border-gray-400"
+                } animation rounded`}
+              >
                 <input
                   type={eye ? "text" : "password"}
                   className="flex-grow p-2 outline-0"
@@ -125,11 +149,23 @@ const Login = () => {
                 </p>
               )}
               <div className="flex items-center justify-end gap-2">
-                <p className="text-sm text-blue-500 pt-2 cursor-pointer">
+                <p
+                  className={`text-sm ${
+                    light
+                      ? "text-neutral-300 hover:text-sky-500"
+                      : "text-blue-500"
+                  } animation pt-2 cursor-pointer`}
+                >
                   Create an Account
                 </p>
                 <span className="text-gray-400">|</span>
-                <p className="text-sm text-blue-500 pt-2 cursor-pointer">
+                <p
+                  className={`text-sm ${
+                    light
+                      ? "text-neutral-300 hover:text-sky-500"
+                      : "text-blue-500"
+                  } animation pt-2 cursor-pointer`}
+                >
                   Forgot Password?
                 </p>
               </div>
@@ -138,7 +174,11 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+              className={`${
+                light
+                  ? "bg-sky-600 text-white hover:bg-slate-500"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              } py-2 rounded animation cursor-pointer`}
             >
               Login
             </button>

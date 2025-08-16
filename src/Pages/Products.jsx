@@ -4,7 +4,7 @@ import axios from "axios";
 import Footer from "../Components/Footer";
 import { MdClear } from "react-icons/md";
 import { AppContext } from "../contexts/AppProvider";
-import RightSideBar from "../Components/RightSideBar";
+import LeftSideBar from "../Components/LeftSideBar";
 
 const url = "https://urban-cart-server.onrender.com/products";
 
@@ -16,9 +16,12 @@ const Products = () => {
   const [debouncedInput, setDebouncedInput] = useState("");
   const [filterType, setFilterType] = useState("");
   const [sortType, setSortType] = useState("");
+  const [open, setOpen] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
   const { light } = useContext(AppContext);
 
+  // Fetch products from server
   const serverData = async () => {
     try {
       const res = await axios.get(url);
@@ -32,8 +35,20 @@ const Products = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setInput(e.target.value);
+  // Delete product (optimistic + refresh)
+  const handleDelete = async (id) => {
+    try {
+      // optimistic update (instant UI feedback)
+      setData((prev) => prev.filter((p) => p.id !== id));
+
+      // delete from API
+      await axios.delete(`${url}/${id}`);
+
+      // background sync
+      serverData();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   // Debouncing the input
@@ -87,9 +102,40 @@ const Products = () => {
     document.title = "Products - Urban Cart";
   }, []);
 
+  useEffect(() => {
+    if (open) {
+      setShouldRender(true);
+    } else {
+      const timer = setTimeout(() => setShouldRender(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
+
+  // Left Sidebar
+  const handleLeftSideBar = () => {
+    setOpen(!open);
+  };
+
   return (
     <main className="pt-30 relative">
       <section className="container mx-auto px-4 lg:px-0">
+        {/* Left Sidebar */}
+        {shouldRender && (
+          <LeftSideBar data={open} setData={setOpen} refreshData={serverData} />
+        )}
+
+        {/* BackShadow after Leftsidebar */}
+        {shouldRender && (
+          <div
+            className={`absolute z-30 bg-black/50 inset-0 transition-opacity duration-300 ${
+              open
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`}
+            onClick={() => setOpen(false)}
+          ></div>
+        )}
+
         {/* Search Header */}
         <section className="flex flex-col gap-5 sm:flex-row md:gap-10 items-center justify-between px-4 md:px-0">
           <p
@@ -102,14 +148,14 @@ const Products = () => {
           <div className="flex">
             <input
               type="text"
-              className={`border p-1 w-70 sm:w-50 lg:w-70 rounded-l outline-0 border-gray-400 ${
+              className={`border px-2 py-1 w-70 sm:w-50 lg:w-70 rounded-l outline-0 border-gray-400 ${
                 light
                   ? "placeholder:text-neutral-200 text-neutral-200"
                   : "placeholder:text-black"
               }`}
               placeholder="Browse your Collections"
               value={input}
-              onChange={handleChange}
+              onChange={(e) => setInput(e.target.value)}
             />
             <button
               onClick={() => setInput("")}
@@ -137,13 +183,13 @@ const Products = () => {
         ) : (
           <section>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+              {/* Filtering */}
               <section className="flex items-center gap-10 mt-5">
-                {/* Filtering */}
                 <div className="flex items-center">
                   <p
                     className={`font-medium ${
                       light ? "text-gray-400" : "text-slate-900"
-                    } animation w-full`}
+                    } text-sm sm:text-md pr-1 animation w-full`}
                   >
                     Filter by:
                   </p>
@@ -156,38 +202,10 @@ const Products = () => {
                         : "text-gray-700 bg-white"
                     }  rounded-lg shadow-sm focus:outline-none cursor-pointer transition duration-200`}
                   >
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value=""
-                    >
-                      All
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="Category"
-                    >
-                      Category
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="Title"
-                    >
-                      Title
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="Description"
-                    >
-                      Description
-                    </option>
+                    <option value="">All</option>
+                    <option value="Category">Category</option>
+                    <option value="Title">Title</option>
+                    <option value="Description">Description</option>
                   </select>
                 </div>
 
@@ -196,7 +214,7 @@ const Products = () => {
                   <p
                     className={`font-medium ${
                       light ? "text-gray-400" : "text-slate-900"
-                    } animation w-full`}
+                    } text-sm sm:text-md animation w-full`}
                   >
                     Sort by:
                   </p>
@@ -209,51 +227,17 @@ const Products = () => {
                         : "text-gray-700 bg-white"
                     }  rounded-lg shadow-sm focus:outline-none cursor-pointer transition duration-200`}
                   >
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value=""
-                    >
-                      All
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="A-Z"
-                    >
-                      A-Z
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="Z-A"
-                    >
-                      Z-A
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="High to Low"
-                    >
-                      Price: High to Low
-                    </option>
-                    <option
-                      className={`${
-                        light ? "bg-slate-500 hover:bg-sky-500" : ""
-                      } animation`}
-                      value="Low to High"
-                    >
-                      Price: Low to High
-                    </option>
+                    <option value="">All</option>
+                    <option value="A-Z">A-Z</option>
+                    <option value="Z-A">Z-A</option>
+                    <option value="High to Low">Price: High to Low</option>
+                    <option value="Low to High">Price: Low to High</option>
                   </select>
                 </div>
               </section>
 
               <button
+                onClick={handleLeftSideBar}
                 className={`p-2 mt-5 md:w-50 rounded-md cursor-pointer border ${
                   light
                     ? "text-white bg-sky-600 border-slate-500 hover:border-slate-600 hover:bg-slate-600 hover:text-white"
@@ -267,7 +251,13 @@ const Products = () => {
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-15 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
               {filteredData.length > 0 ? (
-                filteredData.map((el) => <ProductCard key={el.id} data={el} />)
+                filteredData.map((el) => (
+                  <ProductCard
+                    key={el.id}
+                    data={el}
+                    onDelete={handleDelete} // ✅ fixed
+                  />
+                ))
               ) : (
                 <p className="text-center text-gray-500 col-span-full text-lg h-100 flex items-center">
                   <img

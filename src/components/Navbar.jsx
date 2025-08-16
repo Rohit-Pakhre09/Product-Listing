@@ -181,7 +181,9 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 fill="white"
                 className="size-9"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
                 <path
                   fillRule="evenodd"

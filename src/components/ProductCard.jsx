@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppProvider";
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, onDelete }) => {
   const { id, title, price, category, description, image } = data;
   const [like, isLike] = useState(false);
 
@@ -66,7 +66,7 @@ const ProductCard = ({ data }) => {
           </p>
         </Link>
         {/* Buttons [Add to Cart, Edit, Delete] */}
-        <div className="absolute z-30 bottom-8 flex items-center justify-around gap-5 w-75 left-2">
+        <div className="absolute z-10 bottom-8 flex items-center justify-around gap-5 w-75 left-2">
           <button
             className={`px-3 py-2 border text-sm rounded-md cursor-pointer ${
               light
@@ -82,9 +82,9 @@ const ProductCard = ({ data }) => {
             <div
               className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
                 light
-                  ? "bg-gray-100 shadow-md hover:shadow-emerald-500"
+                  ? "bg-neutral-200 shadow-md hover:shadow-emerald-500"
                   : "bg-gray-100 shadow-sm hover:shadow-emerald-500"
-              }`}
+              } animation`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,11 +98,12 @@ const ProductCard = ({ data }) => {
 
             {/* Delete SVG */}
             <div
+              onClick={() => onDelete(id)}
               className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
                 light
-                  ? "bg-gray-100 shadow-md hover:shadow-red-500"
+                  ? "bg-neutral-200 shadow-md hover:shadow-red-500"
                   : "bg-gray-100 shadow-sm hover:shadow-red-500"
-              }`}
+              } animation`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -122,9 +123,9 @@ const ProductCard = ({ data }) => {
             <div
               className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
                 light
-                  ? "bg-gray-100 shadow-lg hover:shadow-red-500"
+                  ? "bg-neutral-200 shadow-lg hover:shadow-red-500"
                   : "bg-gray-100 shadow-sm hover:shadow-red-500"
-              } ${like ? "shadow-red-500" : "shadow-none"}`}
+              } animation ${like ? "shadow-red-500" : "shadow-none"}`}
               onClick={() => isLike(!like)}
             >
               <svg
