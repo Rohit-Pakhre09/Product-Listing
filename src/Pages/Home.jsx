@@ -54,7 +54,7 @@ const Home = () => {
 
           <div className="flex-1 flex justify-end">
             <img
-              src="/src/assets/shopping-1.avif"
+              src="/src/assets/shopping-1.jpg"
               alt="Urban Cart Shopping"
               className="rounded-xl shadow-lg max-w-full h-auto object-cover md:max-w-sm lg:max-w-xl"
             />
