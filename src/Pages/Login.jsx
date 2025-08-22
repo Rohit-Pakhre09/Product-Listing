@@ -1,7 +1,9 @@
+// src/Pages/Login.js
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/AppProvider";
+import { useNavigate } from "react-router-dom";
 
 const formObj = {
   email: "",
@@ -12,7 +14,9 @@ const Login = () => {
   const [eye, setEye] = useState(false);
 
   // Context
-  const { light } = useContext(AppContext);
+  const { light, login, logout } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Login - Urban Cart";
@@ -37,7 +41,11 @@ const Login = () => {
     initialValues: formObj,
     validationSchema: formSchema,
     onSubmit: (values) => {
+      const fakeToken = "user123token";
+      login(fakeToken);
+
       formikForm.resetForm();
+      navigate("/products"); // redirect to protected page
     },
   });
 
@@ -64,19 +72,27 @@ const Login = () => {
 
           <div className="flex flex-col gap-5">
             {/* Email Field */}
-            <div>
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="email"
+                className={`font-medium ${
+                  light ? "text-neutral-200" : "text-blue-500"
+                }`}
+              >
+                Email
+              </label>
               <input
                 type="email"
-                className={`w-full border ${
+                id="email"
+                className={`w-full border rounded p-2 outline-0 animation ${
                   light
-                    ? "border-neutral-200 placeholder:text-neutral-200 text-neutral-200"
-                    : "border-gray-400"
-                } rounded p-2 outline-0 animation`}
+                    ? "border-neutral-200 text-neutral-200"
+                    : "border-gray-400 text-black"
+                }`}
                 name="email"
                 value={formikForm.values.email}
                 onChange={formikForm.handleChange}
                 onBlur={formikForm.handleBlur}
-                placeholder="E-mail"
               />
               {formikForm.touched.email && formikForm.errors.email && (
                 <p className="text-red-500 text-sm mt-1">
@@ -86,22 +102,30 @@ const Login = () => {
             </div>
 
             {/* Password Field with Eye Toggle */}
-            <div>
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="password"
+                className={`font-medium ${
+                  light ? "text-neutral-200" : "text-blue-500"
+                }`}
+              >
+                Password
+              </label>
               <div
-                className={`flex items-center border ${
+                className={`flex items-center border rounded animation ${
                   light
-                    ? "border-neutral-200 placeholder:text-neutral-200 text-neutral-200"
-                    : "border-gray-400"
-                } animation rounded`}
+                    ? "border-neutral-200 text-neutral-200"
+                    : "border-gray-400 text-black"
+                }`}
               >
                 <input
                   type={eye ? "text" : "password"}
-                  className="flex-grow p-2 outline-0"
+                  id="password"
+                  className="flex-grow p-2 outline-0 bg-transparent"
                   name="password"
                   value={formikForm.values.password}
                   onChange={formikForm.handleChange}
                   onBlur={formikForm.handleBlur}
-                  placeholder="Password"
                 />
                 {!eye ? (
                   <svg
@@ -142,31 +166,26 @@ const Login = () => {
                   </svg>
                 )}
               </div>
-              {/* Error Message */}
               {formikForm.touched.password && formikForm.errors.password && (
                 <p className="text-red-500 text-sm mt-1">
                   {formikForm.errors.password}
                 </p>
               )}
+
+              {/* Logout Button */}
               <div className="flex items-center justify-end gap-2">
                 <p
-                  className={`text-sm ${
+                  className={`text-sm cursor-pointer animation pt-2 ${
                     light
                       ? "text-neutral-300 hover:text-sky-500"
                       : "text-blue-500"
-                  } animation pt-2 cursor-pointer`}
+                  }`}
+                  onClick={() => {
+                    logout();
+                    formikForm.resetForm();
+                  }}
                 >
-                  Create an Account
-                </p>
-                <span className="text-gray-400">|</span>
-                <p
-                  className={`text-sm ${
-                    light
-                      ? "text-neutral-300 hover:text-sky-500"
-                      : "text-blue-500"
-                  } animation pt-2 cursor-pointer`}
-                >
-                  Forgot Password?
+                  Logout
                 </p>
               </div>
             </div>

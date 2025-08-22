@@ -1,12 +1,14 @@
-import { useContext, useState } from "react";
+// src/Components/LeftSideBar.js
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/AppProvider";
 import axios from "axios";
 
-const LeftSideBar = ({ data, setData, refreshData }) => {
+const url = "https://urban-cart-server.onrender.com/products";
+
+const LeftSideBar = ({ data, setData, refreshData, editProduct }) => {
   const { light } = useContext(AppContext);
 
-  // form state
-  const [form, setForm] = useState({
+  const initialForm = {
     id: "",
     title: "",
     price: "",
@@ -15,223 +17,160 @@ const LeftSideBar = ({ data, setData, refreshData }) => {
     image: "",
     rate: "",
     count: "",
-  });
+  };
 
-  // handle change
+  const [form, setForm] = useState(initialForm);
+
+  // When editProduct changes, prefill form or reset
+  useEffect(() => {
+    if (editProduct) {
+      setForm({
+        id: editProduct.id,
+        title: editProduct.title,
+        price: editProduct.price,
+        description: editProduct.description,
+        category: editProduct.category,
+        image: editProduct.image,
+        rate: editProduct.rating?.rate || "",
+        count: editProduct.rating?.count || "",
+      });
+    } else {
+      setForm(initialForm);
+    }
+  }, [editProduct]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  // Add data to the API
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Product submitted:", form);
-
-    // close sidebar
-    setData(false);
-
-    // refresh product list in Products.jsx
-    if (refreshData) {
-      refreshData();
-    }
-
     try {
-      const res = await axios.post(
-        "https://urban-cart-server.onrender.com/products",
-        {
+      if (editProduct) {
+        // Update existing product
+        await axios.put(`${url}/${form.id}`, {
+          title: form.title,
+          price: Number(form.price),
+          description: form.description,
+          category: form.category,
+          image: form.image,
+          rating: { rate: Number(form.rate), count: Number(form.count) },
+        });
+      } else {
+        // Add new product
+        await axios.post(url, {
           id: form.id,
           title: form.title,
           price: Number(form.price),
           description: form.description,
           category: form.category,
           image: form.image,
-          rating: {
-            rate: Number(form.rate),
-            count: Number(form.count),
-          },
-        }
-      );
-
-      // refresh product list in Products.jsx
-      if (refreshData) {
-        refreshData();
+          rating: { rate: Number(form.rate), count: Number(form.count) },
+        });
       }
 
-      // clear form
-      setForm({
-        id: "",
-        title: "",
-        price: "",
-        description: "",
-        category: "",
-        image: "",
-        rate: "",
-        count: "",
-      });
+      refreshData(); // Refresh product list
+      setForm(initialForm); // Reset form
+      setData(false); // Close sidebar
     } catch (error) {
-      console.log("Error to add product in the api: ", error);
+      console.error("Error submitting product:", error);
     }
   };
 
   return (
-    <section
-      className={`min-h-screen w-3/4 md:w-120 
-      ${light ? "bg-slate-800 shadow-lg shadow-sky-400" : "bg-white"}
-      p-5 fixed top-0 left-0 z-50 transform animation
-      ${data ? "translate-x-0" : "-translate-x-full"}`}
+    <aside
+      className={`fixed top-0 left-0 z-50 w-4/5 md:w-96 h-full md:h-screen p-5 transform transition-transform duration-300 overflow-y-auto
+        ${data ? "translate-x-0" : "-translate-x-full"}
+        ${
+          light
+            ? "bg-slate-800 text-neutral-200 shadow-lg shadow-sky-400"
+            : "bg-white text-black"
+        }
+      `}
     >
-      {/* Header Section */}
-      <div className="flex items-center justify-between">
-        <p
-          className={`${
-            light ? "text-neutral-200" : "text-black"
-          } animation text-xl md:text-3xl font-bold`}
-        >
-          Add Product
-        </p>
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-2xl md:text-3xl font-bold">
+          {editProduct ? "Edit Product" : "Add Product"}
+        </h2>
         <button
           onClick={() => setData(false)}
-          className={`group px-3 py-2 ${
+          className={`px-3 py-2 rounded-md cursor-pointer ${
             light
-              ? "bg-sky-500 text-white"
+              ? "bg-sky-500 hover:bg-sky-600 text-white"
               : "bg-blue-500 hover:bg-blue-700 text-white"
-          } animation rounded-md cursor-pointer`}
+          }`}
         >
           ✕
         </button>
       </div>
 
       <hr
-        className={`mt-5 ${
-          light ? " border-neutral-400" : "border-neutral-800"
-        } animation`}
+        className={`border ${
+          light ? "border-neutral-400" : "border-neutral-300"
+        } mb-5`}
       />
 
-      {/* Form Section */}
-      <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4 min-h-100 md:min-h-screen bg-amber-100 overflow-auto">
-        <div>
-          <label
-            className={`block text-sm font-medium ${
-              light ? "text-neutral-200" : "text-black"
-            } mb-2 animation`}
-          >
-            Product ID
-          </label>
-          <input
-            type="number"
-            name="id"
-            value={form.id}
-            onChange={handleChange}
-            className={`w-full border p-2 rounded ${
-              light ? "border border-neutral-200 text-neutral-200" : ""
-            } animation`}
-          />
-        </div>
-
-        <div>
-          <label
-            className={`block text-sm font-medium ${
-              light ? "text-neutral-200" : "text-black"
-            } mb-2 animation`}
-          >
-            Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            className={`w-full border p-2 rounded ${
-              light ? "border border-neutral-200 text-neutral-200" : ""
-            } animation`}
-            required
-          />
-        </div>
-
-        <div>
-          <label
-            className={`block text-sm font-medium ${
-              light ? "text-neutral-200" : "text-black"
-            } mb-2 animation`}
-          >
-            Price
-          </label>
-          <input
-            type="number"
-            name="price"
-            value={form.price}
-            onChange={handleChange}
-            className={`w-full border p-2 rounded ${
-              light ? "border border-neutral-200 text-neutral-200" : ""
-            } animation`}
-            required
-          />
-        </div>
-
-        <div>
-          <label
-            className={`block text-sm font-medium ${
-              light ? "text-neutral-200" : "text-black"
-            } mb-2 animation`}
-          >
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            className={`w-full border p-2 rounded ${
-              light ? "border border-neutral-200 text-neutral-200" : ""
-            } animation`}
-          ></textarea>
-        </div>
-
-        <div>
-          <label
-            className={`block text-sm font-medium ${
-              light ? "text-neutral-200" : "text-black"
-            } mb-2 animation`}
-          >
-            Category
-          </label>
-          <input
-            type="text"
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            className={`w-full border p-2 rounded ${
-              light ? "border border-neutral-200 text-neutral-200" : ""
-            } animation`}
-          />
-        </div>
-
-        <div>
-          <label
-            className={`block text-sm font-medium ${
-              light ? "text-neutral-200" : "text-black"
-            } mb-2 animation`}
-          >
-            Image URL
-          </label>
-          <input
-            type="text"
-            name="image"
-            value={form.image}
-            onChange={handleChange}
-            className={`w-full border p-2 rounded ${
-              light ? "border border-neutral-200 text-neutral-200" : ""
-            } animation`}
-          />
-        </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {[
+          {
+            label: "Product ID",
+            name: "id",
+            type: "number",
+            required: !editProduct,
+          },
+          { label: "Title", name: "title", type: "text", required: true },
+          { label: "Price", name: "price", type: "number", required: true },
+          {
+            label: "Description",
+            name: "description",
+            type: "textarea",
+            required: false,
+          },
+          {
+            label: "Category",
+            name: "category",
+            type: "text",
+            required: false,
+          },
+          { label: "Image URL", name: "image", type: "text", required: false },
+        ].map((field) => (
+          <div key={field.name}>
+            <label className="block text-sm font-medium mb-2">
+              {field.label}
+            </label>
+            {field.type === "textarea" ? (
+              <textarea
+                name={field.name}
+                value={form[field.name]}
+                onChange={handleChange}
+                className={`w-full border rounded p-2 focus:outline-none focus:ring ${
+                  light
+                    ? "border-neutral-200 text-neutral-200"
+                    : "border-neutral-400 text-black"
+                }`}
+              />
+            ) : (
+              <input
+                type={field.type}
+                name={field.name}
+                value={form[field.name]}
+                onChange={handleChange}
+                required={field.required}
+                disabled={editProduct && field.name === "id"}
+                className={`w-full border rounded p-2 focus:outline-none focus:ring ${
+                  light
+                    ? "border-neutral-200 text-neutral-200"
+                    : "border-neutral-400 text-black"
+                }`}
+              />
+            )}
+          </div>
+        ))}
 
         <div className="flex gap-4">
           <div className="flex-1">
-            <label
-              className={`block text-sm font-medium ${
-                light ? "text-neutral-200" : "text-black"
-              } mb-2 animation`}
-            >
+            <label className="block text-sm font-medium mb-2">
               Rating (rate)
             </label>
             <input
@@ -240,17 +179,15 @@ const LeftSideBar = ({ data, setData, refreshData }) => {
               name="rate"
               value={form.rate}
               onChange={handleChange}
-              className={`w-full border p-2 rounded ${
-                light ? "border border-neutral-200 text-neutral-200" : ""
-              } animation`}
+              className={`w-full border rounded p-2 focus:outline-none focus:ring ${
+                light
+                  ? "border-neutral-200 text-neutral-200"
+                  : "border-neutral-400 text-black"
+              }`}
             />
           </div>
           <div className="flex-1">
-            <label
-              className={`block text-sm font-medium ${
-                light ? "text-neutral-200" : "text-black"
-              } mb-2 animation`}
-            >
+            <label className="block text-sm font-medium mb-2">
               Rating (count)
             </label>
             <input
@@ -258,36 +195,28 @@ const LeftSideBar = ({ data, setData, refreshData }) => {
               name="count"
               value={form.count}
               onChange={handleChange}
-              className={`w-full border p-2 rounded ${
-                light ? "border border-neutral-200 text-neutral-200" : ""
-              } animation`}
+              className={`w-full border rounded p-2 focus:outline-none focus:ring ${
+                light
+                  ? "border-neutral-200 text-neutral-200"
+                  : "border-neutral-400 text-black"
+              }`}
             />
           </div>
         </div>
 
         <button
           type="submit"
-          className={`mt-4 p-2 rounded-md ${
+          className={`mt-4 p-2 rounded-md w-full cursor-pointer ${
             light
-              ? "bg-sky-500 text-white hover:bg-sky-600"
-              : "bg-blue-500 text-white hover:bg-blue-700"
-          } cursor-pointer`}
+              ? "bg-sky-500 hover:bg-sky-600 text-white"
+              : "bg-blue-500 hover:bg-blue-700 text-white"
+          }`}
         >
-          Save Product
+          {editProduct ? "Update Product" : "Save Product"}
         </button>
       </form>
-    </section>
+    </aside>
   );
 };
 
 export default LeftSideBar;
-
-// id	20
-// title	"DANVOUY Womens T Shirt Casual Cotton Short"
-// price	12.99
-// description	"95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter."
-// category	"women's clothing"
-// image	"https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png"
-// rating
-// rate	3.6
-// count	145

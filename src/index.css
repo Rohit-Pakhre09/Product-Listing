@@ -5,3 +5,83 @@
     transition-duration: 300ms;
     transition-timing-function: ease-in-out;
 }
+
+/* Popper scale animation */
+@keyframes popper {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-popper {
+    animation: popper 0.5s ease-out forwards;
+}
+
+/* Checkmark draw animation */
+@keyframes checkmark {
+    0% {
+        stroke-dasharray: 0, 24;
+    }
+
+    100% {
+        stroke-dasharray: 24, 24;
+    }
+}
+
+.animate-checkmark path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: checkmark 0.5s ease forwards;
+}
+
+/* Popper animation */
+@keyframes popper {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-popper {
+    animation: popper 0.5s ease-out forwards;
+}
+
+/* Checkmark draw animation */
+@keyframes checkmark {
+    0% {
+        stroke-dasharray: 24;
+        stroke-dashoffset: 24;
+    }
+
+    100% {
+        stroke-dasharray: 24;
+        stroke-dashoffset: 0;
+    }
+}
+
+.animate-checkmark path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: checkmark 0.5s ease forwards;
+}

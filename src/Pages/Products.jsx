@@ -18,6 +18,7 @@ const Products = () => {
   const [sortType, setSortType] = useState("");
   const [open, setOpen] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
 
   const { light } = useContext(AppContext);
 
@@ -35,10 +36,9 @@ const Products = () => {
     }
   };
 
-  // Delete product (optimistic + refresh)
+  // Delete product
   const handleDelete = async (id) => {
     try {
-      // optimistic update (instant UI feedback)
       setData((prev) => prev.filter((p) => p.id !== id));
 
       // delete from API
@@ -116,12 +116,29 @@ const Products = () => {
     setOpen(!open);
   };
 
+  // Function to open Add Product sidebar
+  const handleAddProduct = () => {
+    setEditProduct(null);
+    setOpen(true);
+  };
+
+  // Function to open Edit Product sidebar
+  const handleEditProduct = (product) => {
+    setEditProduct(product);
+    setOpen(true);
+  };
+
   return (
     <main className="pt-30 relative">
       <section className="container mx-auto px-4 lg:px-0">
         {/* Left Sidebar */}
         {shouldRender && (
-          <LeftSideBar data={open} setData={setOpen} refreshData={serverData} />
+          <LeftSideBar
+            data={open}
+            setData={setOpen}
+            refreshData={serverData}
+            editProduct={editProduct}
+          />
         )}
 
         {/* BackShadow after Leftsidebar */}
@@ -176,7 +193,6 @@ const Products = () => {
             <div className="w-12 h-12 border-4 border-gray-300 border-t-cyan-600 rounded-full animate-spin"></div>
           </div>
         ) : error ? (
-          /* Show only Server Error (not "No Product Found") */
           <div className="flex justify-center items-center min-h-[60vh]">
             <img src="/src/assets/serverError.png" alt="Server Error" />
           </div>
@@ -236,8 +252,9 @@ const Products = () => {
                 </div>
               </section>
 
+              {/* Add Product Button */}
               <button
-                onClick={handleLeftSideBar}
+                onClick={handleAddProduct}
                 className={`p-2 mt-5 md:w-50 rounded-md cursor-pointer border ${
                   light
                     ? "text-white bg-sky-600 border-slate-500 hover:border-slate-600 hover:bg-slate-600 hover:text-white"
@@ -255,7 +272,11 @@ const Products = () => {
                   <ProductCard
                     key={el.id}
                     data={el}
-                    onDelete={handleDelete} // ✅ fixed
+                    onDelete={handleDelete}
+                    onEdit={(product) => {
+                      setEditProduct(product);
+                      setOpen(true);
+                    }}
                   />
                 ))
               ) : (

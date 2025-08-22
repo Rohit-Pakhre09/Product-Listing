@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
 import { AppContext } from "../contexts/AppProvider";
+import { Link } from "react-router-dom";
 
-const ProductCard = ({ data, onDelete }) => {
+const ProductCard = ({ data, onDelete, onEdit }) => {
   const { id, title, price, category, description, image } = data;
   const [like, isLike] = useState(false);
 
@@ -67,19 +67,24 @@ const ProductCard = ({ data, onDelete }) => {
         </Link>
         {/* Buttons [Add to Cart, Edit, Delete] */}
         <div className="absolute z-10 bottom-8 flex items-center justify-around gap-5 w-75 left-2">
-          <button
-            className={`px-3 py-2 border text-sm rounded-md cursor-pointer ${
-              light
-                ? "border-0 hover:bg-sky-700 hover:text-white text-neutral-200 bg-sky-500"
-                : "border-blue-500 hover:bg-blue-900 hover:border-blue-900 hover:text-white"
-            } animation`}
-          >
-            Add to Cart
-          </button>
+          <Link to={`/description/${id}/${title}`}>
+            <button
+              className={`px-10 py-2 font-medium border text-sm rounded-md cursor-pointer ${
+                light
+                  ? "border-0 hover:bg-sky-700 hover:text-white text-neutral-200 bg-sky-500"
+                  : "border-blue-500 hover:bg-blue-900 hover:border-blue-900 hover:text-white"
+              } animation`}
+            >
+              View
+            </button>
+          </Link>
 
           <section className="flex justify-center items-center gap-3">
             {/* Edit SVG */}
             <div
+              onClick={() => {
+                if (onEdit) onEdit(data); // ✅ Call onEdit if defined
+              }}
               className={`w-9 h-9 rounded-full p-2 flex justify-center items-center ${
                 light
                   ? "bg-neutral-200 shadow-md hover:shadow-emerald-500"
