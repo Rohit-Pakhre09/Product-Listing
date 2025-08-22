@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import Footer from "../Components/Footer";
+import Footer from "../components/Footer";
 import axios from "axios";
 import { AppContext } from "../contexts/AppProvider";
 import { useNavigate } from "react-router-dom";

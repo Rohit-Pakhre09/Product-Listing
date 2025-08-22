@@ -6,7 +6,7 @@ import Login from "../Pages/Login";
 import NoPage from "../Pages/NoPage";
 import Products from "../Pages/Products";
 import Description from "../Pages/Description";
-import ProtectedRoute from "../Components/ProtectedRoute";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const AllRoutes = () => {
   return (

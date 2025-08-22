@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Footer from "../Components/Footer";
+import Footer from "../components/Footer";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../contexts/AppProvider";
 

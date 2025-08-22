@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Navbar from "./Components/Navbars";
+import Navbar from "./components/Navbar";
 import AllRoutes from "./routes/AllRoutes";
 import { AppContext } from "./contexts/AppProvider";
 

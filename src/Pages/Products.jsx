@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import ProductCard from "../Components/ProductCard";
+import ProductCard from "../components/ProductCard";
 import axios from "axios";
-import Footer from "../Components/Footer";
+import Footer from "../components/Footer";
 import { MdClear } from "react-icons/md";
 import { AppContext } from "../contexts/AppProvider";
-import LeftSideBar from "../Components/LeftSideBar";
+import LeftSideBar from "../components/LeftSideBar";
 
 const url = "https://urban-cart-server.onrender.com/products";
 
