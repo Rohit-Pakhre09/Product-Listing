@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../contexts/AppProvider";
+import shoppingImg from "../assets/shopping-1.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const Home = () => {
 
           <div className="flex-1 flex justify-end">
             <img
-              src="/src/assets/shopping-1.jpg"
+              src={shoppingImg}
               alt="Urban Cart Shopping"
               className="rounded-xl shadow-lg max-w-full h-auto object-cover md:max-w-sm lg:max-w-xl"
             />
